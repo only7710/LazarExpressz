@@ -8,10 +8,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const vehicleMarkers = new Map();
 
 function getColorByDelay(delay) {
-    if (delay <= 4 * 60) return "green";
-    if (delay <= 19 * 60) return "yellow";
-    if (delay <= 59 * 60) return "orange";
-    return "red";
+    if (delay <= 4 * 60) return "#00FF00";
+    if (delay <= 19 * 60) return "#FFFF00";
+    if (delay <= 59 * 60) return "#FFA500";
+    return "#FF0000";
 }
 
 async function fetchGraphQL(query) {
@@ -119,8 +119,9 @@ function displayMarker(
 
     const arrowSvg = `
       <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="18" cy="18" r="13" fill="${color}" stroke="black" stroke-width="1.5" />
+        <circle cx="18" cy="18" r="10" fill="${color}" stroke="black" stroke-width="1.5" />
         <g transform="rotate(${heading},18,18)">
+          <polygon points="18,0 13,10 23,10" fill="black"/>
         </g>
       </svg>
     `;
@@ -159,6 +160,7 @@ function displayMarker(
 }
 
 async function saveTrainData(trainData) {
+    console.log(trainData);
     try {
         await fetch("assets/php/save_train_data.php", {
             method: "POST",
