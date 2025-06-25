@@ -1,5 +1,4 @@
 <?php
-    // Vonat adatainak mentése a 'trains' táblába
     header('Content-Type: application/json');
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

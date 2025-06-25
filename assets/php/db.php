@@ -5,5 +5,3 @@
     if($conn->connect_error){
        die("Sikertelen csatlakozás! Hibakód: ".$conn->connect_error);
     }
-
-?>

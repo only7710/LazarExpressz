@@ -27,7 +27,6 @@
 
     $responseData = json_decode($response, true);
 
-    // Ha van vehiclePositions a válaszban, akkor logold MySQL-be
     if (isset($responseData['data']['vehiclePositions'])) {
         try {
             $pdo = new PDO("mysql:host=localhost;dbname=mav", "user", "pass");
@@ -46,6 +45,3 @@
             error_log("DB error: " . $e->getMessage());
         }
     }
-
-
-?>
