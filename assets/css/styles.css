@@ -1,0 +1,19 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+#map {
+    height: 100vh;
+}
+.popup-table {
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+}
+.popup-table td,
+.popup-table th {
+    border: 1px solid #ccc;
+    padding: 4px;
+    text-align: left;
+}
