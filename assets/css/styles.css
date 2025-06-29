@@ -11,6 +11,9 @@ html {
     font-size: 14px;
     border-collapse: collapse;
     width: 100%;
+    max-height: 200px;
+    display: block;
+    overflow-y: auto;
 }
 .popup-table td,
 .popup-table th {

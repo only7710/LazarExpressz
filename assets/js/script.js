@@ -48,7 +48,7 @@ async function fetchAndDisplayTrains() {
 async function fetchTripDelay(vehicle) {
     const gtfsId = vehicle.trip.gtfsId;
     const date = new Date().toISOString().split("T")[0];
-    const query = `{ trip(id: \"${gtfsId}\", serviceDay: \"${date}\") { tripHeadsign trainCategoryName trainName route { longName shortName } stoptimes { stop { name } realtimeArrival realtimeDeparture arrivalDelay scheduledArrival scheduledDeparture } } }`;
+    const query = `{ trip(id: \"${gtfsId}\", serviceDay: \"${date}\") { tripHeadsign trainCategoryName trainName route { longName shortName } stoptimes { stop { name lat lon } realtimeArrival realtimeDeparture arrivalDelay scheduledArrival scheduledDeparture } } }`;
 
     const data = await fetchGraphQL(query);
     const trip = data.trip;
@@ -157,6 +157,22 @@ function displayMarker(
     marker.bindPopup(popup);
     marker.addTo(map);
     vehicleMarkers.set(id, marker);
+
+    let polyline = null;
+    marker.on('popupopen', function() {
+        const routeCoords = stoptimes
+            .filter(st => st.stop.lat !== undefined && st.stop.lon !== undefined)
+            .map(st => [st.stop.lat, st.stop.lon]);
+        if (routeCoords.length > 1) {
+            polyline = L.polyline(routeCoords, {color: 'red', weight: 4}).addTo(map);
+        }
+    });
+    marker.on('popupclose', function() {
+        if (polyline) {
+            map.removeLayer(polyline);
+            polyline = null;
+        }
+    });
 }
 
 async function saveTrainData(trainData) {
