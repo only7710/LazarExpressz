@@ -130,6 +130,12 @@ body {
   100% { transform: rotate(360deg); }
 }
 
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 .error {
   background: #fef2f2;
   border: 1px solid #fecaca;

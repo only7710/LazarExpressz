@@ -9,6 +9,7 @@ function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
+  const [lastUpdate, setLastUpdate] = useState(null);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -27,6 +28,7 @@ function SearchPage() {
       
       if (response.success) {
         setResults(response.results);
+        setLastUpdate(response.last_updated);
       } else {
         setError(response.error || 'Hiba történt a keresés során');
       }
@@ -43,6 +45,7 @@ function SearchPage() {
     setResults([]);
     setError(null);
     setHasSearched(false);
+    setLastUpdate(null);
   };
 
   return (
@@ -258,6 +261,21 @@ function SearchPage() {
                     </div>
                   </Link>
                 ))}
+              </div>
+            )}
+
+            {/* Last Update Info */}
+            {results.length > 0 && lastUpdate && (
+              <div style={{ 
+                marginTop: '20px',
+                padding: '12px',
+                background: 'rgba(102, 126, 234, 0.05)',
+                borderRadius: '8px',
+                fontSize: '0.8rem',
+                color: '#666',
+                textAlign: 'center'
+              }}>
+                <strong>Adatok frissítve:</strong> {new Date(lastUpdate).toLocaleString('hu-HU')}
               </div>
             )}
           </div>

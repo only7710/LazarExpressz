@@ -49,6 +49,7 @@ function TrainMap() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedTrain, setSelectedTrain] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState(null);
 
   useEffect(() => {
     loadTrains();
@@ -78,6 +79,7 @@ function TrainMap() {
           })
         );
         setTrains(trainsWithPositions);
+        setLastUpdate(response.last_updated);
       }
       
       setError(null);
@@ -353,6 +355,34 @@ function TrainMap() {
             >
               Teljes részletek megtekintése
             </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Last Update Info */}
+      {!loading && trains.length > 0 && lastUpdate && (
+        <div className="card">
+          <div style={{ 
+            fontSize: '0.8rem',
+            color: '#666',
+            textAlign: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <div>
+              <strong>Térkép adatok frissítve:</strong> {new Date(lastUpdate).toLocaleString('hu-HU')}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ 
+                width: '6px', 
+                height: '6px', 
+                borderRadius: '50%', 
+                background: '#10b981',
+                animation: 'pulse 2s infinite'
+              }}></div>
+              <span>Automatikus frissítés: 15mp</span>
+            </div>
           </div>
         </div>
       )}

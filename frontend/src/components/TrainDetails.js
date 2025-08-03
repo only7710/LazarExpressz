@@ -189,8 +189,27 @@ function TrainDetails() {
               </div>
             </div>
           </div>
-          <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '12px' }}>
-            Utolsó frissítés: {new Date(position.timestamp).toLocaleString('hu-HU')}
+          <div style={{ 
+            fontSize: '0.8rem', 
+            color: '#666', 
+            marginTop: '12px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <div>
+              <strong>Pozíció frissítve:</strong> {new Date(position.timestamp).toLocaleString('hu-HU')}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ 
+                width: '6px', 
+                height: '6px', 
+                borderRadius: '50%', 
+                background: '#10b981',
+                animation: 'pulse 2s infinite'
+              }}></div>
+              <span>Valós idejű</span>
+            </div>
           </div>
         </div>
       )}

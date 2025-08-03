@@ -172,9 +172,50 @@ function Dashboard() {
 
       {status && (
         <div className="card">
-          <div style={{ fontSize: '0.8rem', color: '#666', textAlign: 'center' }}>
-            Utolsó frissítés: {new Date(status.last_updated).toLocaleString('hu-HU')}
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            fontSize: '0.8rem', 
+            color: '#666',
+            padding: '8px 0'
+          }}>
+            <div>
+              <strong>Utolsó frissítés:</strong> {new Date(status.last_updated).toLocaleString('hu-HU')}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ 
+                width: '8px', 
+                height: '8px', 
+                borderRadius: '50%', 
+                background: '#10b981',
+                animation: 'pulse 2s infinite'
+              }}></div>
+              <span>Cache aktív</span>
+            </div>
           </div>
+          
+          {status.cache_info && (
+            <div style={{ 
+              marginTop: '12px',
+              padding: '12px',
+              background: 'rgba(102, 126, 234, 0.05)',
+              borderRadius: '8px',
+              fontSize: '0.8rem'
+            }}>
+              <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Cache állapot:</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '8px' }}>
+                {Object.entries(status.cache_info).map(([type, info]) => (
+                  <div key={type} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ textTransform: 'capitalize' }}>{type}:</span>
+                    <span style={{ color: info.exists ? '#10b981' : '#ef4444' }}>
+                      {info.exists ? '✓' : '✗'}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

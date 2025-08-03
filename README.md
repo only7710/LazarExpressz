@@ -12,6 +12,8 @@ Egy modern, valós idejű vonatkövető webalkalmazás React frontend és Python
 - **📊 Irányítópult**: Rendszer áttekintés és statisztikák
 - **📱 Reszponzív design**: Mobil és desktop eszközökön optimalizált
 - **⚡ Valós idejű frissítések**: Automatikus adatfrissítés
+- **💾 JSON Cache rendszer**: Gyors adatszolgáltatás cache-elt JSON fájlokból
+- **🕒 Utolsó frissítés megjelenítése**: Pontos timestampek minden adathoz
 
 ### 🎯 Funkciók részletesen
 
@@ -48,6 +50,8 @@ Egy modern, valós idejű vonatkövető webalkalmazás React frontend és Python
 - **Flask**: Web framework
 - **Flask-CORS**: Cross-origin resource sharing
 - **JSON API**: RESTful API endpoints
+- **Cache Manager**: Intelligens JSON fájl cache rendszer
+- **Automatikus frissítés**: 30 másodperces háttér frissítés
 - **Valós idejű szimuláció**: Mock adatok késés és pozíció szimulációval
 
 ### Frontend (React)
@@ -125,13 +129,20 @@ cd frontend && npm start
 #### Rendszer
 - `GET /api/status` - Rendszer állapot és statisztikák
 
+#### Cache Kezelés
+- `GET /api/cache/info` - Cache fájlok információi
+- `POST /api/cache/clear` - Cache törlése
+- `POST /api/cache/refresh` - Manuális cache frissítés
+
 ### API Válasz Formátum
 
 ```json
 {
   "success": true,
   "trains": [...],
-  "count": 3
+  "count": 3,
+  "last_updated": "2024-01-15T10:30:45.123Z",
+  "from_cache": true
 }
 ```
 
@@ -141,6 +152,8 @@ cd frontend && npm start
 train-tracker/
 ├── backend/
 │   ├── app.py              # Flask alkalmazás
+│   ├── cache_manager.py    # Cache kezelő rendszer
+│   ├── cache/              # JSON cache fájlok (auto-generált)
 │   └── requirements.txt    # Python függőségek
 ├── frontend/
 │   ├── public/
@@ -166,6 +179,8 @@ train-tracker/
 ### Backend Komponensek
 
 - **Flask App**: API endpoints és mock adatok kezelése
+- **Cache Manager**: JSON fájl cache kezelő osztály
+- **Automatikus háttér frissítés**: Threading alapú cache frissítés
 - **CORS Support**: Frontend-backend kommunikáció engedélyezése
 - **Mock Data**: Valósághű vonateadatok szimulációja
 - **Real-time Simulation**: Pozíció és késés szimuláció

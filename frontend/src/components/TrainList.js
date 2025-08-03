@@ -9,6 +9,8 @@ function TrainList() {
   const [stations, setStations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState(null);
+  const [fromCache, setFromCache] = useState(false);
   const [filters, setFilters] = useState({
     station: '',
     type: '',
@@ -33,6 +35,8 @@ function TrainList() {
       
       if (trainsData.success) {
         setTrains(trainsData.trains);
+        setLastUpdate(trainsData.last_updated);
+        setFromCache(trainsData.from_cache || false);
       }
       
       if (stationsData.success) {
@@ -293,6 +297,34 @@ function TrainList() {
           }}>
             <Train size={48} style={{ opacity: 0.3, marginBottom: '16px' }} />
             <p>Nincs megjeleníthető vonat a jelenlegi szűrőkkel.</p>
+          </div>
+        )}
+
+        {/* Last Update Info */}
+        {!loading && trains.length > 0 && lastUpdate && (
+          <div style={{ 
+            marginTop: '20px',
+            padding: '12px',
+            background: 'rgba(102, 126, 234, 0.05)',
+            borderRadius: '8px',
+            fontSize: '0.8rem',
+            color: '#666',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <div>
+              <strong>Adatok frissítve:</strong> {new Date(lastUpdate).toLocaleString('hu-HU')}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ 
+                width: '6px', 
+                height: '6px', 
+                borderRadius: '50%', 
+                background: fromCache ? '#10b981' : '#667eea'
+              }}></div>
+              <span>{fromCache ? 'Cache-ből betöltve' : 'Frissen generálva'}</span>
+            </div>
           </div>
         )}
       </div>
