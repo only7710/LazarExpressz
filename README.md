@@ -1,91 +1,230 @@
-## LázárExpressz
+# Magyar Vonatkövető - Train Tracking System
 
-Ez a projekt egy valós idejű, webalapú térképes alkalmazás, amely a Magyar Államvasutak (MÁV) vonatainak aktuális pozícióját, sebességét és késését jeleníti meg. Az alkalmazás a szükséges adatokat a MÁV GraphQL-alapú API-járól nyeri.
+Egy modern, valós idejű vonatkövető webalkalmazás React frontend és Python Flask backend technológiákkal.
 
-### Főbb funkciók
+## Funkcionalitás
 
-- Magyarországi MÁV vonatok valós idejű térképes megjelenítése
-- Vonatok aktuális helyzete, sebessége, késése, következő megállója
-- Részletes menetrendi adatok (tervezett és tényleges érkezési/indulási idők, késés)
-- Adatok mentése MySQL adatbázisba
+### ✨ Főbb Jellemzők
 
-### Technológiák
+- **🚂 Valós idejű vonatkövetés**: Vonatok aktuális pozíciójának és állapotának megjelenítése
+- **🗺️ Interaktív térkép**: Leaflet alapú térkép a vonatok pozíciójával
+- **🔍 Fejlett keresés**: Vonatok keresése szám, állomás vagy útvonal alapján
+- **📊 Irányítópult**: Rendszer áttekintés és statisztikák
+- **📱 Reszponzív design**: Mobil és desktop eszközökön optimalizált
+- **⚡ Valós idejű frissítések**: Automatikus adatfrissítés
 
-- **Frontend:** HTML, CSS, JavaScript, [Leaflet.js](https://leafletjs.com/) (térkép)
-- **Backend:** PHP (adatbázis-kezelés, proxy)
-- **Adatbázis:** MySQL
-- **Adatforrás:** MÁV GraphQL API
+### 🎯 Funkciók részletesen
 
-### Telepítés
+1. **Irányítópult**
+   - Rendszer állapot áttekintése
+   - Vonatok száma és állapota
+   - Gyors hivatkozások
 
-1. **Követelmények**
-   - PHP (pl. XAMPP)
-   - MySQL szerver
-   - Internetkapcsolat (MÁV API eléréséhez)
+2. **Vonatlista**
+   - Összes vonat megjelenítése
+   - Szűrési lehetőségek (állomás, típus, állapot)
+   - Részletes vonatinformációk
 
-2. **Adatbázis létrehozása**
-   - Hozd létre a `lazarexpress` nevű adatbázist.
-   - Futtasd az `assets/sql/db.sql` fájlt a szükséges tábla létrehozásához:
-     ```sql
-     CREATE TABLE trains (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         vehicle_id VARCHAR(255),
-         train_name VARCHAR(255),
-         headsign VARCHAR(255),
-         latitude DOUBLE,
-         longitude DOUBLE,
-         speed INT,
-         delay_seconds INT,
-         stop_name VARCHAR(255),
-         scheduled_time TIME,
-         actual_time TIME,
-         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-     );
-     ```
+3. **Vonat részletek**
+   - Teljes útvonal megjelenítése
+   - Valós idejű pozíció
+   - Késési információk
+   - Menetrend adatok
 
-3. **Beállítások**
-   - Ellenőrizd az adatbázis elérési adatokat az `assets/php/db.php` fájlban:
-     ```php
-     $conn = new mysqli("localhost", "root", "", "lazarexpress");
-     ```
-   - Szükség esetén módosítsd a felhasználónevet/jelszót.
+4. **Keresés**
+   - Szöveges keresés vonatok között
+   - Keresés vonatszám, állomás vagy útvonal alapján
+   - Intelligens találat kijelzés
 
-4. **Futtatás**
-   - Indítsd el a webszervert (pl. XAMPP).
-   - Nyisd meg a böngészőben az `index.php`-t.
+5. **Térkép nézet**
+   - Interaktív térkép Magyarország területével
+   - Vonatok pozíciója markerekkel
+   - Kattintható információs buborékok
+   - Valós idejű pozíció frissítés
 
-### Főbb fájlok
+## Technológiai Stack
 
-- **index.php** – Az alkalmazás belépési pontja, tartalmazza a térképet.
-- **assets/js/script.js** – A frontend logika, vonatpozíciók lekérése, térképre rajzolás, popupok, adatok mentése.
-- **assets/css/styles.css** – Stílusok a térképhez és popupokhoz.
-- **assets/php/proxy.php** – Proxy a MÁV GraphQL API-hoz, opcionális adatmentés.
-- **assets/php/save_train_data.php** – Vonatadatok mentése az adatbázisba.
-- **assets/php/db.php** – Adatbázis kapcsolat beállítása.
-- **assets/sql/db.sql** – Az adatbázis tábla szerkezete.
+### Backend (Python Flask)
+- **Flask**: Web framework
+- **Flask-CORS**: Cross-origin resource sharing
+- **JSON API**: RESTful API endpoints
+- **Valós idejű szimuláció**: Mock adatok késés és pozíció szimulációval
 
-### Használat
+### Frontend (React)
+- **React 18**: Modern React hooks és komponensek
+- **React Router**: Kliens oldali routing
+- **Axios**: HTTP kliens API kommunikációhoz
+- **Leaflet & React-Leaflet**: Interaktív térképek
+- **Lucide React**: Modern ikonok
+- **CSS3**: Egyedi styling gradientekkel és animációkkal
 
-- Töltsd le a projektet GitHub-ról:
-  ```bash
-  git clone https://github.com/<felhasznalo>/<repo-nev>.git
-  ```
-  vagy töltsd le ZIP-ben, majd csomagold ki a webszervered megfelelő könyvtárába.
-- Rakd bele a htdocs mappába
-- Indísd el a XAMPP-t
-- Készísd el az adatbázist a weboldalhoz
-- A térképen megjelennek a vonatok, színkódolva a késésük szerint.
-- Egy vonatra kattintva részletes menetrendi információk jelennek meg.
-- Az adatok percenként frissülnek.
+## Telepítés és Futtatás
 
-### Hibakeresés
+### Előfeltételek
+- **Python 3.8+**
+- **Node.js 16+**
+- **npm vagy yarn**
 
-- Ellenőrizd, hogy az adatbázis elérhető és a kapcsolati adatok helyesek.
-- A PHP hibák a szerver logjában jelennek meg.
-- A böngésző konzoljában láthatók a JavaScript hibák.
+### Backend beállítása
 
-### Licenc
+1. **Függőségek telepítése:**
+```bash
+pip install -r requirements.txt
+```
 
-Ez a projekt saját projektmunkás licensz alatt áll. A forráskód és a dokumentáció kizárólag oktatási célokra használható fel, kereskedelmi felhasználása nem engedélyezett.
+2. **Flask alkalmazás indítása:**
+```bash
+cd backend
+python app.py
+```
 
-A felhasználók vállalják, hogy nem töltenek fel jogvédett tartalmat.
+A backend a `http://localhost:5000` címen indul el.
+
+### Frontend beállítása
+
+1. **Függőségek telepítése:**
+```bash
+cd frontend
+npm install
+```
+
+2. **React alkalmazás indítása:**
+```bash
+npm start
+```
+
+A frontend a `http://localhost:3000` címen indul el.
+
+### Gyors indítás (fejlesztői mód)
+
+**Backend terminál:**
+```bash
+cd backend && python app.py
+```
+
+**Frontend terminál (új ablakban):**
+```bash
+cd frontend && npm start
+```
+
+## API Dokumentáció
+
+### Endpoints
+
+#### Vonatok
+- `GET /api/trains` - Összes vonat lekérése (szűrőkkel)
+- `GET /api/trains/{id}` - Specifikus vonat részletei
+- `GET /api/trains/{id}/position` - Vonat valós idejű pozíciója
+
+#### Állomások
+- `GET /api/stations` - Összes állomás listája
+
+#### Keresés
+- `GET /api/search?q={query}` - Vonatok keresése
+
+#### Rendszer
+- `GET /api/status` - Rendszer állapot és statisztikák
+
+### API Válasz Formátum
+
+```json
+{
+  "success": true,
+  "trains": [...],
+  "count": 3
+}
+```
+
+## Alkalmazás Struktúra
+
+```
+train-tracker/
+├── backend/
+│   ├── app.py              # Flask alkalmazás
+│   └── requirements.txt    # Python függőségek
+├── frontend/
+│   ├── public/
+│   │   └── index.html      # HTML template
+│   ├── src/
+│   │   ├── components/     # React komponensek
+│   │   │   ├── Dashboard.js
+│   │   │   ├── TrainList.js
+│   │   │   ├── TrainDetails.js
+│   │   │   ├── SearchPage.js
+│   │   │   └── TrainMap.js
+│   │   ├── services/       # API szolgáltatások
+│   │   │   └── api.js
+│   │   ├── App.js          # Fő alkalmazás komponens
+│   │   ├── index.js        # React belépési pont
+│   │   └── index.css       # Globális stílusok
+│   └── package.json        # NPM függőségek
+└── README.md
+```
+
+## Komponensek Leírása
+
+### Backend Komponensek
+
+- **Flask App**: API endpoints és mock adatok kezelése
+- **CORS Support**: Frontend-backend kommunikáció engedélyezése
+- **Mock Data**: Valósághű vonateadatok szimulációja
+- **Real-time Simulation**: Pozíció és késés szimuláció
+
+### Frontend Komponensek
+
+- **App.js**: Fő alkalmazás és routing
+- **Dashboard**: Áttekintő nézet és statisztikák
+- **TrainList**: Vonatok listázása és szűrése
+- **TrainDetails**: Részletes vonat információk
+- **SearchPage**: Keresési funkciók
+- **TrainMap**: Interaktív térkép nézet
+- **ApiService**: Központi API kommunikáció
+
+## Design Rendszer
+
+### Színpaletta
+- **Elsődleges**: #667eea (kék gradiens)
+- **Másodlagos**: #764ba2 (lila gradiens)
+- **Siker**: #10b981 (zöld)
+- **Hiba/Késés**: #ef4444 (piros)
+- **Szürke skála**: #666, #333, rgba alapok
+
+### UI Jellemzők
+- **Glassmorphism**: Üveghatású kártyák
+- **Gradiens háttér**: Modern színátmenet
+- **Animációk**: Hover effektek és transitiók
+- **Reszponzív**: Mobile-first megközelítés
+- **Akadálymentesség**: Jó kontraszt és olvashatóság
+
+## Fejlesztési Lehetőségek
+
+### Jövőbeli funkciók
+- **Valós API integráció**: MÁV API vagy más vasúti szolgáltatók
+- **Autentikáció**: Felhasználói fiókok és személyre szabás
+- **Push értesítések**: Késési és állapot változás értesítések
+- **Offline támogatás**: Service Worker és caching
+- **Több nyelv**: Nemzetköziesítés (i18n)
+- **Dark mode**: Sötét téma választási lehetőség
+
+### Technikai fejlesztések
+- **Database**: SQLite/PostgreSQL adatbázis
+- **WebSocket**: Valós idejű kommunikáció
+- **Tests**: Unit és integrációs tesztek
+- **Docker**: Konténerizáció
+- **CI/CD**: Automatikus telepítés
+
+## Licenc
+
+Ez a projekt oktatási célra készült. A valós használathoz vonatkozó engedélyek és API kulcsok beszerzése szükséges.
+
+## Közreműködés
+
+A projekt továbbfejlesztése üdvözölve van. Kérjük, nyissanak issue-t vagy pull request-et a GitHub repositoryban.
+
+## Támogatás
+
+Ha problémába ütköznek, kérjük, nyissanak egy issue-t a GitHub repositoryban részletes leírással.
+
+---
+
+**Made with ❤️ for Hungarian Railway Enthusiasts**
